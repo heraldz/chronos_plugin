@@ -1,0 +1,9 @@
+<h1>Editing Status</h1>
+<% if current_person.is_admin? %>
+<%= render 'form' %>
+
+<%= link_to 'Show', @status %> |
+<%= link_to 'Back', statuses_path %>
+<% else %>  
+  Sorry, must be Admin <%= link_to 'Back', root_path %> 
+<% end %>

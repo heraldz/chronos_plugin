@@ -1,0 +1,61 @@
+<%= form_for(@task) do |f| %>
+  <% if @task.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:</h2>
+
+      <ul>
+      <% @task.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div style='height:200px; margin-left:45px; width:92%'>
+  <table>
+    <tr>	  		  
+      <div class="field">
+        <td width=75px height=50px><%= f.label :title %></td>
+        <td><%= f.text_area :title, :cols => "40" %></td>
+      </div>
+    <tr>
+      <div class="field">
+        <td width=75px height=50px><%= f.label :email %></td>
+        <td><%= f.text_area :email, :cols => "40" %><td>
+      </div>
+    </tr>
+	<tr>	
+      <div class="field">
+        <td width=75px height=30px><%= f.label :source_id %></td>
+     	<td><%= f.collection_select :source_id, Source.order(:name),:id,:name, include_blank: false %><td>
+      </div>
+	</tr>
+	<tr>  
+      <div class="field">
+        <td width=75px height=30px><%= f.label :task_type_id %></td>
+        <td><%= f.collection_select :task_type_id, TaskType.order(:name),:id,:name, include_blank: false %></td>
+      </div>
+	</tr>
+	<tr>  
+      <div class="field">
+        <td width=75px height=30px><%= f.label :person_id %></td>
+        <td><%= f.collection_select :person_id, Person.order(:full_name),:id,:full_name, include_blank: false %></td>
+      </div>
+	</tr>
+	<tr>  
+      <div class="field">
+        <td width=75px height=30px><%= f.label :status_id %></td>
+        <td><%= f.collection_select :status_id, Status.order(:name),:id,:name, include_blank: false %></td>	
+      </div>
+	</tr>
+	<tr>  
+        <td width=75px height=30px><%= hidden_field_tag :created_by, current_person.id %></td>
+    </tr>
+
+  </table>
+  <div class="actions">
+	<td><%= button_to 'Create Task', tasks_path, :class => "btn btn-primary btn-xs" %> or
+		<%=link_to "cancel", tasks_path %></td>
+  </div>
+</div>
+  	    
+<% end %>

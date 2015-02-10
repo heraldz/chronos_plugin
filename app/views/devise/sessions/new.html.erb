@@ -1,0 +1,36 @@
+<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+<div class="container">
+   <legend><h1>Login</h1></legend>
+   <table> 
+	    <tr>
+		<div class="field">
+			<td width=20px></td>		  
+            <td width=70px height=40px><%= f.label :email %></td>
+            <td><%= f.email_field :email, autofocus: true, class: "form-control", placeholder: "Email", :size => "30" %><td>
+		</div>		
+	    </tr>
+		<tr>
+			<td width=20px></td>	
+	        <td width=70px height=40px><%= f.label :password %></td>
+	        <td><%= f.password_field :password, autocomplete: "off", class: "form-control", placeholder: "Password", :size => "30" %></td>
+	    </tr>
+	    <tr>
+          <div class="checkbox">
+			  <td width=20px></td>
+			  <td></td>	
+		      <td height=40px><%= f.check_box :remember_me %>
+		      <%= f.label :remember_me %></td>
+           </div>
+		</tr>
+	    <tr>
+          <div class="actions">
+			  <td></td>
+			  <td></td>	
+		      <td><%= f.submit "Log in" %></td>
+           </div>
+		</tr>
+   </table>	
+</div>	
+<% end %>
+
+<%= render "devise/shared/links" %>

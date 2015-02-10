@@ -1,0 +1,29 @@
+<%= form_for(@source) do |f| %>
+  <% if @source.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@source.errors.count, "error") %> prohibited this task_type from being saved:</h2>
+
+      <ul>
+      <% @source.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div style='margin-left:45px; width:92%'>
+    <table>
+	  <tr>
+       <div class="field">	 
+	    <td width=75px height=30px><%= f.label :name %></td>
+	    <td><%= f.text_area :name, :cols => "40" %></td>
+		<td width=75px></td>
+	    <td><div class="actions">
+	          <%= f.submit %>
+	        </div></td>      
+       </div>
+	 </tr>  
+    </table>
+  </div>	 
+
+<% end %>

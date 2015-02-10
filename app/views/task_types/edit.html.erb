@@ -1,0 +1,9 @@
+<h1>Editing Task Type</h1>
+<% if current_person.is_admin? %>
+<%= render 'form' %>
+
+<%= link_to 'Show', @task_type %> |
+<%= link_to 'Back', task_types_path %>
+<% else %>  
+  Sorry, must be Admin <%= link_to 'Back', root_path %> 
+<% end %>

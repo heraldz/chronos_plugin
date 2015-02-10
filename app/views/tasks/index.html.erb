@@ -1,0 +1,25 @@
+<%= render 'dashboard/header' %>
+<table>
+  <tr>
+	<td>
+	  <div style='height:200px; margin-left:45px; width:92%'>
+		<%= form_tag tasks_path, :method => 'get', :id => "tasks_search" do %>
+		  <p>	  
+	        <%= text_field_tag :search, params[:search], :placeholder => "Search" %>
+ 		  </p>
+ 		<% end %>
+	    <% if current_person.is_supervisor? or current_person.is_admin? %>
+		  <div id="tasks table-hover"><%= render 'tasks' %></div>
+	</td>
+	<td>
+      </div>
+          <%= render 'import' %>
+        <% end %>
+   
+        <% if current_person.is_agent? %> 
+		  <div id="tasks"><%= render 'agenttasks' %></div>
+		<% end %>     
+          </div>
+	</td>  	
+  </tr>
+</table>

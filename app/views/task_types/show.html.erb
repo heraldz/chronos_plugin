@@ -1,0 +1,12 @@
+<p id="notice"><%= notice %></p>
+<% if current_person.is_admin? %>
+<p>
+  <strong>Name:</strong>
+  <%= @task_type.name %>
+</p>
+
+<%= link_to 'Edit', edit_task_type_path(@task_type) %> |
+<%= link_to 'Back', task_types_path %>
+<% else %>  
+  Sorry, must be Admin <%= link_to 'Back', root_path %> 
+<% end %>

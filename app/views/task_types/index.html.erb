@@ -1,0 +1,28 @@
+<%= render 'dashboard/header' %>
+<% if current_person.is_admin? %>
+<div style='margin-left:45px; width:92%'>
+<h1>Task Types</h1>
+<%= render 'form' %>
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @task_types.each do |task_type| %>
+      <tr>
+        <td><%= task_type.name %></td>
+        <td><%= link_to 'Edit', edit_task_type_path(task_type) %></td>
+        <td><%= link_to 'Destroy', task_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+<br>
+<% else %>  
+  Sorry, must be Admin <%= link_to 'Back', root_path %> 
+<% end %>
