@@ -1,4 +1,4 @@
-<%= render 'dashboard/header' %>
+<%= render 'shared/header' %>
 <table>
   <tr>
 	<td>
@@ -9,17 +9,18 @@
  		  </p>
  		<% end %>
 	    <% if current_person.is_supervisor? or current_person.is_admin? %>
-		  <div id="tasks table-hover"><%= render 'tasks' %></div>
+		  <h2>All Tasks</h2>
+		  <div id="tasks"><%= render 'tasks' %></div>
 	</td>
 	<td>
       </div>
           <%= render 'import' %>
+	</td> 	  
         <% end %>
-   
-        <% if current_person.is_agent? %> 
-		  <div id="tasks"><%= render 'agenttasks' %></div>
+        <% if current_person.is_agent? %>
+		    <h2>All Tasks - <%= current_person.full_name %></h2>
+		    <div id="tasks"><%= render 'agenttasks' %></div>
 		<% end %>     
-          </div>
-	</td>  	
+          </div> 	
   </tr>
 </table>

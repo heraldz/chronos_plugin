@@ -1,11 +1,10 @@
 	      <%= hidden_field_tag :direction, params[:direction] %>
 	      <%= hidden_field_tag :sort, params[:sort] %>
-		<h2>Tasks</h2>
 		  <%= will_paginate @tasks %>
 		  <table class="table table-striped table-hover">
   		    <thead>
     		  <tr>
-     	        <th><%= sortable_column "Title" %></th>       					
+     	        <th><%= sortable_column "Title" %></th>					
      			<th><%= sortable_column "Email" %></th>       					
      			<th>Source</th>      					
      			<th>Task Type</th>   					

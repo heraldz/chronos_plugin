@@ -28,7 +28,17 @@
 	    return false;
 	  });
 	});
+	
+	
+	function showAlert() {
+	    $("#myAlert").addClass("in");
+		window.setTimeout("$('#myAlert').html(' ');", 3000);
+	}
 
+	window.setTimeout(function () {
+	    showAlert();
+	}, 500);
+	
 	
    /*!
     * Bootstrap v3.3.2 (http://getbootstrap.com)

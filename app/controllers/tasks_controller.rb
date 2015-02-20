@@ -7,10 +7,13 @@ class TasksController < ApplicationController
   # GET /tasks.json
   def index
     order = sortable_column_order
-    @tasks = Task.search(params[:search]).order(order).paginate(:per_page => 10, :page => params[:page])
-    #@task = Task.search(params[:search]).order(sort_column + " " + sort_direction).paginate(:per_page => 5, :page => params[:page])
-    @task_types = TaskType.all
-    @people = Person.all
+    if current_person.is_admin || current_person.is_supervisor?
+      @tasks = Task.search(params[:search]).order(order).paginate(:per_page => 20, :page => params[:page])
+      @task_types = TaskType.all
+      @people = Person.all
+    else
+      @tasks = Task.search(params[:search]).where(:person_id => current_person.id).order(order).paginate(:per_page => 50, :page => params[:page])
+    end    
   end
   
   # GET /tasks/1
@@ -68,30 +71,107 @@ class TasksController < ApplicationController
     end
   end
   
+  # POST /tasks/import(.:format)
   def import
     Task.import(params[:file], current_person.id, params[:task_type_id][:task_type], params[:people_id][:full_name])
     redirect_to tasks_path, notice: "Task properly imported."
   end
 
+  # PATCH /tasks/:id/unpending(.:format
   def unpending
     @task.update_attribute(:status_id, 1)
     #redirect_to :back, notice: "Task set to New"
     
     respond_to do |format|
-      flash[:success] = "Task updated"
+      flash[:success] = "Task reset to New"
       format.html { redirect_to :back }
       format.js
     end  
   end
-    
+  
+  # PATCH /tasks/:id/resolved(.:format)  
   def resolved
     @task.update_attributes(:status_id => 3, :resolved_at => Date.today)
-    redirect_to :back, notice: "Task set to Resolved"
+    #redirect_to :back, notice: "Task set to New"
+    
+    respond_to do |format|
+      flash[:success] = "Task is resolved"
+      format.html { redirect_to :back }
+      format.js
+    end  
   end
   
+  # PATCH /tasks/:id/pending(.:format
   def pending
     @task.update_attribute(:status_id, 2)
-    redirect_to :back, notice: "Task set to Pending"
+    
+    respond_to do |format|
+      flash[:success] = "Task is pending"
+      format.html { redirect_to :back }
+      format.js
+    end  
+  end
+  
+  #GET /voicemail
+  def voicemail
+    order = sortable_column_order
+    if current_person.is_admin || current_person.is_supervisor?
+      @tasks = Task.search(params[:search]).voicemail.paginate(:per_page => 50, :page => params[:page])
+    else
+      @tasks = Task.search(params[:search]).voicemail.where(:person_id => current_person.id).order(order).paginate(:per_page => 50, :page => params[:page])
+    end 
+  end
+  
+  #GET /broken
+  def broken
+    order = sortable_column_order
+    if current_person.is_admin || current_person.is_supervisor?
+      @tasks = Task.search(params[:search]).broken.paginate(:per_page => 50, :page => params[:page])
+    else
+      @tasks = Task.search(params[:search]).broken.where(:person_id => current_person.id).order(order).paginate(:per_page => 50, :page => params[:page])
+    end    
+  end
+  
+  
+  #GET /idle
+  def idle
+    order = sortable_column_order
+    if current_person.is_admin || current_person.is_supervisor?
+      @tasks = Task.search(params[:search]).idle.paginate(:per_page => 50, :page => params[:page])
+    else
+      @tasks = Task.search(params[:search]).idle.where(:person_id => current_person.id).order(order).paginate(:per_page => 50, :page => params[:page])
+    end    
+  end
+  
+  
+  #GET /unmatched
+  def unmatched
+    order = sortable_column_order
+    if current_person.is_admin || current_person.is_supervisor?
+      @tasks = Task.search(params[:search]).unmatched.paginate(:per_page => 50, :page => params[:page])
+    else
+      @tasks = Task.search(params[:search]).unmatched.where(:person_id => current_person.id).order(order).paginate(:per_page => 50, :page => params[:page])
+    end    
+  end
+  
+  #GET /email
+  def email
+    order = sortable_column_order
+    if current_person.is_admin || current_person.is_supervisor?
+      @tasks = Task.search(params[:search]).email_type.paginate(:per_page => 50, :page => params[:page])
+    else
+      @tasks = Task.search(params[:search]).email_type.where(:person_id => current_person.id).order(order).paginate(:per_page => 50, :page => params[:page])
+    end    
+  end
+           
+  #GET /other
+  def other
+    order = sortable_column_order
+    if current_person.is_admin || current_person.is_supervisor?
+      @tasks = Task.search(params[:search]).other.paginate(:per_page => 50, :page => params[:page])
+    else
+      @tasks = Task.search(params[:search]).other.where(:person_id => current_person.id).order(order).paginate(:per_page => 50, :page => params[:page])
+    end    
   end
 
   private

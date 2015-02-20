@@ -1,7 +1,14 @@
 Rails.application.routes.draw do
+  root 'dashboard#index'
+  
+  get "/voicemail", :to => "tasks#voicemail", :as => :voicemail_tasks
+  get "/broken", :to => "tasks#broken", :as => :broken_tasks
+  get "/idle", :to => "tasks#idle", :as => :idle_tasks
+  get "/unmatched", :to => "tasks#unmatched", :as => :unmatched_tasks
+  get "/email", :to => "tasks#email", :as => :email_tasks
+  get "/other", :to => "tasks#other", :as => :other_tasks
   
   resources :roles
-
   resources :tasks do
     collection { post :import }
     member do
@@ -15,10 +22,11 @@ Rails.application.routes.draw do
   resources :sources
 
   devise_for :people
-  root 'dashboard#index'
+  
   
   resources :task_types
   resources :statuses
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
