@@ -1,3 +1,3 @@
 class Role < ActiveRecord::Base
-  has_many :tasks  
+  has_many :people
 end

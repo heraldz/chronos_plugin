@@ -1,9 +1,9 @@
 class Person < ActiveRecord::Base
   has_many :tasks
-  belongs_to :role
+  belongs_to :role, :class_name => "Role", :foreign_key => "role_id"
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
+  devise :database_authenticatable,
          :rememberable, :validatable
                   
   def is_admin?
